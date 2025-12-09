@@ -1,0 +1,14 @@
+export interface Episode {
+  id: number;
+  name: string;
+  airDate: string;
+  code: string;        
+  charactersCount: number;
+}
+
+export interface PagedEpisodes {
+  currentPage: number;
+  totalPages: number;
+  totalCount: number;
+  items: Episode[];
+}

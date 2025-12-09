@@ -1,0 +1,169 @@
+<section class="page">
+  <!-- HERO / TÍTULO -->
+  <header class="hero">
+    <div class="hero-logo">
+      <span class="logo-text">Rick &amp; Morty Episodes</span>
+    </div>
+    <p class="hero-subtitle">
+      Explora los episodios como si fuera tu propio catálogo de streaming.
+    </p>
+  </header>
+
+  <main class="content">
+    <!-- BUSCADOR CENTRADO -->
+    <section class="search-bar">
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Buscar por nombre de episodio..."
+        [value]="nameFilter()"
+        (input)="nameFilter.set(($any($event.target).value || '').toString())"
+        (keyup.enter)="applyFilter()"
+        (blur)="applyFilter()"
+      />
+
+      <button
+        type="button"
+        class="search-btn"
+        (click)="applyFilter()"
+        [disabled]="loading()"
+      >
+        Buscar
+      </button>
+
+      <button
+        type="button"
+        class="search-btn secondary"
+        (click)="clearFilter()"
+        [disabled]="loading() && !nameFilter()"
+      >
+        Limpiar
+      </button>
+    </section>
+
+    <!-- ESTADO DE ERROR GENERAL -->
+    @if (error(); as err) {
+      <div class="status status-error">
+        {{ err }}
+      </div>
+    }
+
+    <!-- ESTADO DE CARGA -->
+    @if (loading()) {
+      <div class="status status-loading">
+        <span class="spinner"></span>
+        <span>Cargando episodios...</span>
+      </div>
+    } @else {
+
+      <!-- SIN RESULTADOS -->
+      @if (episodes().length === 0) {
+        <div class="status">
+          No se encontraron episodios.
+        </div>
+      } @else {
+
+        <!-- LISTADO DE EPISODIOS -->
+        <section class="episodes-section">
+          <div class="episodes-header">
+            <h2>Episodios</h2>
+            <span class="episodes-meta">
+              Página {{ currentPage() }} de {{ totalPages() }} · {{ totalCount() }} episodios
+            </span>
+          </div>
+
+          <div class="episodes-grid">
+            @for (episode of episodes(); track episode.id) {
+              <article
+                class="episode-card"
+                (click)="openEpisodeDetail(episode)"
+              >
+                <div class="episode-poster">
+                  <img
+                    src="https://fondosanimados.com/wp-content/uploads/2023/04/rick-2.jpg"
+                    alt="Imagen del episodio"
+                  />
+                  <span class="episode-code">
+                    {{ episode.code }}
+                  </span>
+                </div>
+
+                <div class="episode-body">
+                  <h3 class="episode-title">
+                    {{ episode.name }}
+                  </h3>
+                  <p class="episode-meta">
+                    {{ episode.airDate }}
+                  </p>
+                  <p class="episode-extra">
+                    {{ episode.charactersCount }} personajes
+                  </p>
+                </div>
+              </article>
+            }
+          </div>
+        </section>
+      }
+    }
+  </main>
+
+  <footer class="pagination">
+    <button
+      class="page-btn"
+      type="button"
+      (click)="prevPage()"
+      [disabled]="currentPage() <= 1 || loading()"
+    >
+      Anterior
+    </button>
+
+    <span class="page-info">
+      Página {{ currentPage() }} de {{ totalPages() }}
+    </span>
+
+    <button
+      class="page-btn"
+      type="button"
+      (click)="nextPage()"
+      [disabled]="currentPage() >= totalPages() || loading()"
+    >
+      Siguiente
+    </button>
+  </footer>
+
+  @if (loadingDetail()) {
+    <div class="status status-loading">
+      <span class="spinner"></span>
+      <span>Cargando detalle del episodio...</span>
+    </div>
+  } @else if (detailError(); as dErr) {
+    <div class="status status-error">
+      {{ dErr }}
+    </div>
+  } @else if (selectedEpisode(); as ep) {
+    <div class="modal-backdrop" (click)="closeDetail()">
+      <section class="episode-modal" (click)="$event.stopPropagation()">
+        <div class="detail-header">
+          <h3>{{ ep.name }}</h3>
+          <button
+            type="button"
+            class="detail-close"
+            (click)="closeDetail()"
+          >
+            ✕
+          </button>
+        </div>
+
+        <p class="detail-code">
+          Código: <strong>{{ ep.code }}</strong>
+        </p>
+        <p class="detail-date">
+          Fecha de emisión: {{ ep.airDate }}
+        </p>
+        <p class="detail-characters">
+          Personajes en el episodio: {{ ep.charactersCount }}
+        </p>
+      </section>
+    </div>
+  }
+</section>
