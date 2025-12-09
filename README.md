@@ -15,10 +15,11 @@ PruebaTecnicaCarsales/backend/
 
 Ejecutar:
 
-```
-dotnet restore
-dotnet run
-```
+`dotnet restore`
+ 
+`cd .\src\PruebaTecnicaCarsales.Api\`
+
+`dotnet run`
 
 
 Frontend (Angular 17)
@@ -32,6 +33,10 @@ Instalar dependencias:
 
 `npm install`
 
+Configurar puerto de ejecución en el archivo enviroment.ts
+Ruta: src/enviroments/enviroment.ts
+
+Cambiar port por el puerto de ejecución donde se estará ejecutando el backend.
 
 Ejecutar la aplicación:
 

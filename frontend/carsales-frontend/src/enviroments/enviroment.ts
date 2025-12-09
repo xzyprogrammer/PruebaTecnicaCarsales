@@ -1,4 +1,6 @@
+const port = 5242;
+
 export const environment = {
   production: false,
-  apiBaseUrl: 'https://localhost:7168/api'
+  apiBaseUrl: `http://localhost:${port}/api`
 };
