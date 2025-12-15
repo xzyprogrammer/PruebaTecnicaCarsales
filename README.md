@@ -29,3 +29,13 @@ Desde la carpeta raíz del backend:
 cd backend
 dotnet restore
 dotnet run
+```
+
+## Ejecución del Frontend
+Desde la carpeta del frontend:
+
+```bash
+cd frontend/carsales-frontend
+npm install
+ng serve
+```
