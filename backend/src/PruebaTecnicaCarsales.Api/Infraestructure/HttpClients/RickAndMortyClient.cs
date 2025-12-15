@@ -70,4 +70,25 @@ public class RickAndMortyClient : IRickAndMortyClient
         return await response.Content.ReadFromJsonAsync<RickAndMortyEpisode>(cancellationToken: cancellationToken);
     }
 
+    public async Task<RickAndMortyCharacter?> GetCharacterByIdAsync(int id, CancellationToken ct = default)
+    {
+        var endpoint = _configuration["RickAndMortyApi:CharactersEndpoint"] ?? "character";
+        var url = $"{endpoint}/{id}";
+        var resp = await _httpClient.GetAsync(url, ct);
+
+        if (resp.StatusCode == System.Net.HttpStatusCode.NotFound) return null;
+        resp.EnsureSuccessStatusCode();
+
+        return await resp.Content.ReadFromJsonAsync<RickAndMortyCharacter>(cancellationToken: ct);
+    }
+
+    public async Task<List<RickAndMortyCharacter>> GetCharactersByIdsAsync(IEnumerable<int> ids, CancellationToken ct = default)
+    {
+        var tasks = ids.Select(id => GetCharacterByIdAsync(id, ct));
+        var results = await Task.WhenAll(tasks);
+
+        return results.Where(x => x != null).Cast<RickAndMortyCharacter>().ToList();
+    }
+
+
 }

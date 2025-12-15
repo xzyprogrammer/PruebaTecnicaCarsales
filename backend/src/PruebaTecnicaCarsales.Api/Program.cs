@@ -6,13 +6,11 @@ using PruebaTecnicaCarsales.Api.Infrastructure.HttpClients;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
-// Swagger - documentación
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddHttpClient<IRickAndMortyClient, RickAndMortyClient>();
 
-// Servicios de aplicación
 builder.Services.AddScoped<IEpisodeService, EpisodeService>();
 
 builder.Services.AddCors(options =>

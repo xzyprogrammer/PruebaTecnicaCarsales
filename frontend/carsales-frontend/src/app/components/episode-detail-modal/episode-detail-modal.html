@@ -1,0 +1,20 @@
+@if (episode(); as ep) {
+  <div class="backdrop" (click)="close.emit()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <header>
+        <h2>{{ ep.name }}</h2>
+        <button (click)="close.emit()">✕</button>
+      </header>
+
+      <div class="episode-meta">
+        <span>{{ ep.code }}</span>
+        <span>{{ ep.airDate }}</span>
+        <span>{{ ep.charactersCount }} personajes</span>
+      </div>
+
+      <h3>Personajes del episodio</h3>
+
+      <app-character-grid [characters]="ep.characters"></app-character-grid>
+    </div>
+  </div>
+}

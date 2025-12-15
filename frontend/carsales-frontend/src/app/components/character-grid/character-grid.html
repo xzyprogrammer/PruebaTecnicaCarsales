@@ -1,0 +1,11 @@
+<div class="characters-grid">
+  @for (c of characters(); track c.id) {
+    <div class="character-card">
+      <img [src]="c.image" [alt]="c.name" />
+      <div class="info">
+        <strong>{{ c.name }}</strong>
+        <span>{{ c.species }} · {{ c.status }}</span>
+      </div>
+    </div>
+  }
+</div>

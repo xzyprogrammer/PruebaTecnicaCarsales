@@ -1,9 +1,15 @@
+import { Character } from './character.model';
+
 export interface Episode {
   id: number;
   name: string;
   airDate: string;
-  code: string;        
+  code: string;
   charactersCount: number;
+}
+
+export interface EpisodeDetail extends Episode {
+  characters: Character[];
 }
 
 export interface PagedEpisodes {
@@ -12,3 +18,5 @@ export interface PagedEpisodes {
   totalCount: number;
   items: Episode[];
 }
+
+

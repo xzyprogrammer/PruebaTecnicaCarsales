@@ -9,7 +9,6 @@ public interface IEpisodeService
         string? nameFilter = null,
         CancellationToken cancellationToken = default);
 
-    Task<EpisodeDto?> GetEpisodeByIdAsync(
-        int id,
-        CancellationToken cancellationToken = default);
+    Task<EpisodeDetailDto?> GetEpisodeByIdAsync(int id, CancellationToken cancellationToken = default);
+
 }

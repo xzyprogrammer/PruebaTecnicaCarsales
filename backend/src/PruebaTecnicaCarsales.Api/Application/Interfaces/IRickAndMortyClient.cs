@@ -12,4 +12,8 @@ public interface IRickAndMortyClient
     Task<RickAndMortyEpisode?> GetEpisodeByIdAsync(
         int id,
         CancellationToken cancellationToken = default);
+
+    Task<RickAndMortyCharacter?> GetCharacterByIdAsync(int id, CancellationToken cancellationToken = default);
+    Task<List<RickAndMortyCharacter>> GetCharactersByIdsAsync(IEnumerable<int> ids, CancellationToken cancellationToken = default);
+
 }

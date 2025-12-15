@@ -1,0 +1,65 @@
+.hero{
+  position: relative;
+  min-height: 420px;
+  display:flex;
+  align-items:flex-end;
+  padding: 2.2rem 1.25rem;
+  background:
+    linear-gradient(to right, rgba(0,0,0,.82) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.10) 100%),
+    radial-gradient(900px 420px at 15% 30%, rgba(229,9,20,.18), transparent 60%),
+    url('../../../assets/hero-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-content{
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  padding-bottom: 0.5rem;
+}
+
+.hero-content h1{
+  margin: 0 0 .4rem;
+  font-size: clamp(2.2rem, 4vw, 3.3rem);
+  font-weight: 800;
+  letter-spacing: .3px;
+}
+
+.hero-content p{
+  margin: 0 0 1.1rem;
+  max-width: 560px;
+  color: var(--muted);
+  line-height: 1.35rem;
+  font-size: .95rem;
+}
+
+.hero-actions{
+  display:flex;
+  gap: .7rem;
+  flex-wrap: wrap;
+}
+
+.hero-actions button{
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: .55rem 1.15rem;
+  font-size: .85rem;
+  cursor:pointer;
+  transition: transform .12s ease, background-color .15s ease, border-color .15s ease, opacity .15s ease;
+}
+
+.hero-actions .primary{
+  background: var(--red);
+  color: #fff;
+}
+
+.hero-actions .primary:hover{ transform: translateY(-1px); background: #ff2a33; }
+
+.hero-actions .secondary{
+  background: rgba(255,255,255,.08);
+  color:#fff;
+  border-color: rgba(255,255,255,.18);
+}
+
+.hero-actions .secondary:hover{ transform: translateY(-1px); background: rgba(255,255,255,.12); }

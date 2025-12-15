@@ -43,19 +43,41 @@ public class EpisodeService : IEpisodeService
         };
     }
 
-    public async Task<EpisodeDto?> GetEpisodeByIdAsync(
-        int id,
-        CancellationToken cancellationToken = default)
+    public async Task<EpisodeDetailDto?> GetEpisodeByIdAsync(
+    int id,
+    CancellationToken cancellationToken = default)
     {
         var episode = await _rickAndMortyClient.GetEpisodeByIdAsync(id, cancellationToken);
+        if (episode == null) return null;
 
-        if (episode == null)
+        var characterIds = episode.Characters
+            .Select(TryGetIdFromUrl)
+            .Where(id => id.HasValue)
+            .Select(id => id!.Value)
+            .Take(10) 
+            .ToList();
+
+        var characters = await _rickAndMortyClient
+            .GetCharactersByIdsAsync(characterIds, cancellationToken);
+
+        return new EpisodeDetailDto
         {
-            return null;
-        }
-
-        return MapToEpisodeDto(episode);
+            Id = episode.Id,
+            Name = episode.Name,
+            AirDate = episode.Air_Date,
+            Code = episode.Episode,
+            CharactersCount = episode.Characters?.Count ?? 0,
+            Characters = characters.Select(c => new CharacterDto
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Status = c.Status,
+                Species = c.Species,
+                Image = c.Image
+            })
+        };
     }
+
 
     private static EpisodeDto MapToEpisodeDto(RickAndMortyEpisode e)
     {
@@ -68,5 +90,13 @@ public class EpisodeService : IEpisodeService
             CharactersCount = e.Characters?.Count ?? 0
         };
     }
+
+    private static int? TryGetIdFromUrl(string url)
+    {
+        if (string.IsNullOrWhiteSpace(url)) return null;
+        var last = url.TrimEnd('/').Split('/').LastOrDefault();
+        return int.TryParse(last, out var id) ? id : null;
+    }
+
 
 }
