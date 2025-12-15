@@ -1,43 +1,31 @@
-#Prueba Técnica – .NET 8 y Angular 17
+# Prueba Técnica – .NET 8 & Angular
 
-Este repositorio contiene una prueba técnica que consiste en desarrollar un Backend For Frontend (BFF) en .NET 8 y una aplicación frontend en Angular 17.
-La solución consume la API pública de Rick and Morty, aplicando paginación, filtrado y una interfaz inspirada en plataformas de streaming.
-Se utilizaron buenas prácticas, arquitectura en capas y funcionalidades modernas de Angular según lo solicitado en la pauta de la prueba.
+Este repositorio contiene una prueba técnica que implementa una arquitectura Backend For Frontend (BFF) utilizando .NET 8 y una aplicación frontend en Angular.  
+La solución consume la API pública de Rick and Morty y permite listar episodios, buscar por nombre y visualizar el detalle de cada episodio junto con sus personajes.
 
+## Tecnologías utilizadas
+- .NET 8 (API REST – BFF)
+- Angular (Standalone components, Signals)
+- API pública Rick and Morty
+- HTML, CSS puro (sin frameworks)
 
-Ejecución del proyecto
-Backend (.NET 8)
+## Arquitectura
+La solución está separada en capas para el backend:
+- **Controllers**: Exponen los endpoints al frontend
+- **Application / Services**: Contiene la lógica de negocio
+- **Infrastructure**: Clientes HTTP y acceso a servicios externos
+- **Domain**: Modelos y DTOs
 
-Abrir una terminal en:
+El frontend está organizado por:
+- **Pages**: Componentes de página
+- **Components**: Componentes reutilizables (cards, modales, grids)
+- **Services**: Comunicación con la API
+- **Models**: Tipos y contratos
 
-PruebaTecnicaCarsales/backend/
+## Ejecución del Backend
+Desde la carpeta raíz del backend:
 
-
-Ejecutar:
-
-`dotnet restore`
- 
-`cd .\src\PruebaTecnicaCarsales.Api\`
-
-`dotnet run`
-
-
-Frontend (Angular 17)
-
-Abrir una terminal en:
-
-PruebaTecnicaCarsales/frontend/carsales-frontend/
-
-
-Instalar dependencias:
-
-`npm install`
-
-Configurar puerto de ejecución en el archivo enviroment.ts
-Ruta: src/enviroments/enviroment.ts
-
-Cambiar port por el puerto de ejecución donde se estará ejecutando el backend.
-
-Ejecutar la aplicación:
-
-`ng serve`
+```bash
+cd backend
+dotnet restore
+dotnet run
